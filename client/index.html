@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Chat room</title>
+</head>
+<body>
+<div>
+    <label>Your message here</label>
+    <input type="text" name="message" id="message">
+    <button id="sendToAll">Send to all</button>
+    <button id="sendToMe">Send to you</button>
+</div>
+
+<div id="target">
+</div>
+
+
+
+<script src="socket.io/socket.io.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
