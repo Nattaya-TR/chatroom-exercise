@@ -10,12 +10,25 @@
 </head>
 <body>
 <h1>Gossip Time</h1>
-<div id="chatBox">
-    <div id="target"></div>
-    <div id="msg">
-        <input type="text" name="message" id="message" placeholder="Type here...">
-        <button type="btn" class="btn btn-primary" id="sendToAll">Send to all</button>
-        <button type="btn" class="btn btn-secondary" id="sendToMe">Send to you</button>
+<div class="container col-12">
+    <div class="row">
+        <div class="col-8" >
+            <div id="target"></div>
+        </div>
+        <div class="col-4">
+            <div id="onlineList"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <label for="message">Write your message here</label>
+                <input type="text" name="message" id="message" class="col-4">
+                <button type="btn" class="btn btn-primary" id="sendToAll">Send to all</button>
+                <button type="btn" class="btn btn-secondary" id="sendToMe">Send to you</button>
+            </div>
+        </div>
     </div>
 </div>
 <script src="socket.io/socket.io.js"></script>

@@ -8,7 +8,7 @@ const io = require('socket.io')(server);
 const clientPath = `${__dirname}/../client`;
 app.use(express.static(clientPath));
 
-let users = 1;
+let users = 0;
 
 server.listen(9004, () => {
     console.log("server running on " +9004);
@@ -16,7 +16,8 @@ server.listen(9004, () => {
 
 io.on('connection', (socket) => {
     let addedUser = false;
-    console.log(' someone connected');
+    console.log('someone connected');
+    console.log(users + ' connected');
 
     //Client emits 'create username", this listens and executes
     socket.on('addNewUser', (username) => {
@@ -26,13 +27,12 @@ io.on('connection', (socket) => {
         socket.username = username;
         users++;
         addedUser = true;
-        io.emit('logIn', (username));
-    });
-        /*echo (all client) that has connected
-        socket.broadcast.emit('user joined',{
+        socket.broadcast.emit('logIn', (username));
+        io.emit('onlineList', {
             username : socket.username,
             users : users
-        });*/
+        });
+    });
 
     socket.on('sendToAll', (message) => {
         io.emit("displayMessage", {
@@ -48,6 +48,19 @@ io.on('connection', (socket) => {
         });
     });
 
+    socket.on('disconnect', () => {
+        if (addedUser) {
+            users--;
+        }
+        username = socket.username
+        socket.broadcast.emit('logOut', (username));
+        console.log(' someone disconnected')
+
+        io.emit('offlineList', {
+            username : socket.username,
+            users : users
+        });
+    });
 });
 
 
