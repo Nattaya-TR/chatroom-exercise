@@ -10,18 +10,14 @@
 </head>
 <body>
 <h1>Gossip Time</h1>
-
-<div id="msg">
-    <label>Your message here</label>
-    <input type="text" name="message" id="message">
-    <button type="btn" class="btn btn-primary" id="sendToAll" >Send to all</button>
-    <button type="btn" class="btn btn-secondary" id="sendToMe">Send to you</button>
+<div id="chatBox">
+    <div id="target"></div>
+    <div id="msg">
+        <input type="text" name="message" id="message" placeholder="Type here...">
+        <button type="btn" class="btn btn-primary" id="sendToAll">Send to all</button>
+        <button type="btn" class="btn btn-secondary" id="sendToMe">Send to you</button>
+    </div>
 </div>
-
-<div id="target">
-</div>
-
-
 <script src="socket.io/socket.io.js"></script>
 <script src="script.js"></script>
 </body>
