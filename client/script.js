@@ -2,24 +2,12 @@ let socket = io.connect();
 let target = document.getElementById('target');
 let list = document.getElementById('onlineList');
 
-let colors = ['#f7451d', '#dd8f08', '#fcf527', '#8afc27', '#03e294',
-    '#0391c9', '#06067f', '#9c0be5', '#f849f0', '#e71313']
 
 let username = prompt("Create your username");
 
-function getUserColor (username) {
-    // Compute hash code
-    let hash = 7;
-    for (let i = 0; i < username.length; i++) {
-        hash = username.charCodeAt(i) + (hash << 5) - hash;
-    }
-    // Calculate color
-    const index = Math.abs(hash % colors.length);
-    return colors[index];
-}
 
+//Prompt to get username
 if (username !== null ) {
-    getUserColor(username);
     socket.emit('addNewUser', (username));
 } else {
     alert("Please type your username again!! ");
@@ -27,6 +15,12 @@ if (username !== null ) {
 
 console.log(username);
 
+//Show who has joined the chatroom
+socket.on('logIn', (username) => {
+    target.innerHTML += '<br>' + username + "  has joined the chatroom ";
+})
+
+//get message from user
 document.getElementById('sendToAll').addEventListener('click', function () {
     let message = document.getElementById("message").value;
     socket.emit('sendToAll', (message));
@@ -37,6 +31,7 @@ document.getElementById('sendToMe').addEventListener('click', function () {
     socket.emit('sendToMe', (message));
 })
 
+//display in chat container
 socket.on('logIn', (username) => {
     target.innerHTML += '<br>' + username + "  has joined the chatroom ";
 })
@@ -49,12 +44,29 @@ socket.on('logOut', (username) => {
     target.innerHTML += '<br>' + username + ' has lefted the chatroom';
 })
 
-socket.on('onlineList', ({username, users}) => {
+//display the list in side bar
+socket.on('onlineList', ({username , users}) => {
     list.innerHTML += '<br>'+ username + ' is online now.' + '<br>' + 'total ' + users + ' users ';
 });
 
 socket.on('offlineList', ({username , users}) => {
-   list.innerHTML +=  '<br>'+ username + ' is offline.' + '<br>' + 'total ' + users + ' users ';
+    list.innerHTML +=  '<br>'+ username + ' is offline.' + '<br>' + 'total ' + users + ' users ';
 })
 
+/*function outputUsers(users) {
+    list.innerHTML = '';
+    users.forEach((user) => {
+        const li = document.createElement('li');
+        li.innerText = user.username;
+        list.appendChild(li);
+    });
+}*/
+
+//prompt the user before leave the chatroom
+document.getElementById('leave').addEventListener('click', () => {
+    const leaving = confirm("Are you sure?");
+    if (leaving) {
+        window.location = 'index.html';
+    }
+});
 
