@@ -1,6 +1,7 @@
 let socket = io.connect();
 let target = document.getElementById('target');
-let list = document.getElementById('onlineList');
+let overview = document.getElementById('overview');
+let list = document.getElementById("onlineUsers");
 
 
 let username = prompt("Create your username");
@@ -46,11 +47,11 @@ socket.on('logOut', (username) => {
 
 //display the list in side bar
 socket.on('onlineList', ({username , users}) => {
-    list.innerHTML += '<br>'+ username + ' is online now.' + '<br>' + 'total ' + users + ' users ';
+    overview.innerHTML += '<br>'+ username + ' is online now.' + '<br>' + 'total ' + users + ' users ';
 });
 
 socket.on('offlineList', ({username , users}) => {
-    list.innerHTML +=  '<br>'+ username + ' is offline.' + '<br>' + 'total ' + users + ' users ';
+    overview.innerHTML +=  '<br>'+ username + ' is offline.' + '<br>' + 'total ' + users + ' users ';
 })
 
 /*function outputUsers(users) {
